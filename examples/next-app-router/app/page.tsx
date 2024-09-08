@@ -1,5 +1,5 @@
 import Image from "next/image";
-import {servePathname, serverParams, serverUserRequest } from "getters/server"
+import {servePageConfig, servePathname, serverParams, serverUserRequest } from "getters/server"
 import { cookies } from "next/headers";
 export default async function Home() {
 
@@ -7,11 +7,13 @@ export default async function Home() {
   const {searchParams}  = serverParams()
   const {cookies , host , isRsc , referer , userAgent} = serverUserRequest()
   const {hash , pathname , query} = servePathname()
+  const {basePath , dynamic , pagePath} = servePageConfig()
 
   console.log('All search params : ' , searchParams.getAll())
-  console.log("A single search params value: " , searchParams.get('a'))
-  console.log('A cookie: ' , cookies.get('auth_token'))
+  console.log("A single search params value: " , searchParams.get('product'))
+  console.log('A cookie: ' , cookies['auth_session'])
   console.log("The user agent infos: " , {hash , pathname , query})
+  console.log("The page configs: " , {basePath , dynamic , pagePath})
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
