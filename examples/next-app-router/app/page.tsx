@@ -1,9 +1,17 @@
 import Image from "next/image";
-import {servePathname, serverParams } from "getters/server"
+import {servePathname, serverParams, serverUserRequest } from "getters/server"
 import { cookies } from "next/headers";
-export default function Home() {
+export default async function Home() {
+
+
   const {searchParams}  = serverParams()
-  console.log('FROM RCS  : ' , searchParams.getAll())
+  const {cookies , host , isRsc , referer , userAgent} = serverUserRequest()
+  const {hash , pathname , query} = servePathname()
+
+  console.log('All search params : ' , searchParams.getAll())
+  console.log("A single search params value: " , searchParams.get('a'))
+  console.log('A cookie: ' , cookies.get('auth_token'))
+  console.log("The user agent infos: " , {hash , pathname , query})
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
